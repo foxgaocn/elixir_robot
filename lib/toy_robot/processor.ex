@@ -14,7 +14,7 @@ defmodule ToyRobot.Processor do
 
   defp get_command_and_options(["place", opt|_]) do
     case PlaceOption.parse(opt) do
-      {:ok, option} -> {:place, option}
+      {:ok, position, direction} -> {:place, position, direction}
       _ -> {:invalid, "invalid place with options #{opt}"}
     end   
   end
@@ -35,8 +35,8 @@ defmodule ToyRobot.Processor do
   end
 
 
-  defp process_command({:place, opt}) do
-    case Robot.call(:place, opt) do
+  defp process_command({:place, position, direction}) do
+    case Robot.call(:place, position, direction) do
       {:error, reason} -> IO.puts("Error: #{reason}")
       _ -> nil
     end

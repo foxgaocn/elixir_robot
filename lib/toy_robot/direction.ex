@@ -1,4 +1,6 @@
 defmodule ToyRobot.Direction do
+  @type t :: :north | :east | :south | :west
+  
   @valid_direction ~w(north east south west)a
 
   def parse_direction(d) do

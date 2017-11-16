@@ -1,7 +1,7 @@
-alias ToyRobot.Direction
+alias ToyRobot.{Direction, Position}
 
 defmodule ToyRobot.PlaceOption do
-  @spec parse(binary) :: tuple
+  @spec parse(binary) :: {:ok, Position.t, Direction.t} | {:error}
   def parse(opt) do
     opt 
       |> String.split(",")
@@ -13,9 +13,8 @@ defmodule ToyRobot.PlaceOption do
 
   defp parse_option(x, y, d) do
     case [Integer.parse(x), Integer.parse(y), Direction.parse_direction(d) ] do
-      [{x, _}, {y, _}, {:ok, d}] -> {:ok, {x,y,d}}
+      [{x, _}, {y, _}, {:ok, d}] -> {:ok, {x,y}, d}
       _ -> {:error}
     end
   end
-
 end
