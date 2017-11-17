@@ -13,15 +13,15 @@ defmodule ToyRobot.Robot do
   end
 
   ##client side apis
-  def start_link() do
+  def start_link(_args) do
     GenServer.start_link(__MODULE__, %State{}, name: __MODULE__)    
   end
 
-  def call(:place, position, direction) do
+  def call({:place, position, direction}) do
     GenServer.call(__MODULE__, {:place, position, direction})
   end
 
-  def call(action) do
+  def call({action}) do
     GenServer.call(__MODULE__, action)
   end
 
@@ -56,7 +56,7 @@ defmodule ToyRobot.Robot do
   end
 
   defp do_action(:report, state) do
-    {:reply, {:ok, state}, state}
+    {:reply, {:ok, "I am on #{elem(state.pos, 0)}, #{elem(state.pos, 1)}, facing #{state.direction}"}, state}
   end
 
   defp do_action(:left, state) do
